@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, String title, String description, BigDecimal price, String image, String categoryName) throws ProductNotFoundException, CategoryNotFoundException {
+    public Product updateProduct(String id, String title, String description, BigDecimal price, String image, String categoryName) throws ProductNotFoundException, CategoryNotFoundException {
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found"));
 
         if (title != null) {
@@ -69,12 +69,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long id) throws ProductNotFoundException {
+    public Product getProductById(String id) throws ProductNotFoundException {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found"));
     }
 
     @Override
-    public void deleteProductById(Long id) throws ProductNotFoundException {
+    public void deleteProductById(String id) throws ProductNotFoundException {
         if (!productRepository.findById(id).isPresent()) {
             throw new ProductNotFoundException("Product with id " + id + " not found");
         }

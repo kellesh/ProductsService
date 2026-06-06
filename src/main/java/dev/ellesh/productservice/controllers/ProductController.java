@@ -50,14 +50,14 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get product by ID", description = "Returns a single product by its ID")
-    public ResponseEntity<ProductResponseDto> getProductByID(@PathVariable("id") Long id) throws ProductNotFoundException {
+    public ResponseEntity<ProductResponseDto> getProductByID(@PathVariable("id") String id) throws ProductNotFoundException {
         Product product = productService.getProductById(id);
         return new ResponseEntity<>(mapToDto(product), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update product by ID", description = "Updates an existing product with the given details")
-    public ResponseEntity<ProductResponseDto> updateProductById(@PathVariable("id") Long id, @Valid @RequestBody UpdateProductRequestDto requestDto) throws ProductNotFoundException, CategoryNotFoundException {
+    public ResponseEntity<ProductResponseDto> updateProductById(@PathVariable("id") String id, @Valid @RequestBody UpdateProductRequestDto requestDto) throws ProductNotFoundException, CategoryNotFoundException {
         Product product = productService.updateProduct(
                 id,
                 requestDto.getTitle(),
@@ -71,7 +71,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete product by ID", description = "Deletes a product by its ID")
-    public ResponseEntity<Void> deleteProductByID(@PathVariable("id") Long id) throws ProductNotFoundException {
+    public ResponseEntity<Void> deleteProductByID(@PathVariable("id") String id) throws ProductNotFoundException {
         productService.deleteProductById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

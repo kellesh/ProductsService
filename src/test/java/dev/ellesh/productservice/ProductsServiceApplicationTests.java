@@ -60,7 +60,7 @@ class ProductsServiceApplicationTests {
         when(categoryRepository.findByName("New Category")).thenReturn(Optional.empty());
         when(categoryRepository.save(any(Category.class))).thenAnswer(invocation -> {
             Category c = invocation.getArgument(0);
-            c.setId(1L);
+            c.setId("1");
             return c;
         });
         when(productRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -76,21 +76,21 @@ class ProductsServiceApplicationTests {
     @Test
     void testGetProductById() throws ProductNotFoundException {
         Product product = new Product();
-        product.setId(1L);
+        product.setId("1");
         product.setTitle("Test Product");
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+        when(productRepository.findById("1")).thenReturn(Optional.of(product));
 
-        Product foundProduct = productService.getProductById(1L);
+        Product foundProduct = productService.getProductById("1");
 
         assertNotNull(foundProduct);
-        assertEquals(1L, foundProduct.getId());
-        verify(productRepository, times(1)).findById(1L);
+        assertEquals("1", foundProduct.getId());
+        verify(productRepository, times(1)).findById("1");
     }
 
     @Test
     void testGetProductByIdNotFound() {
-        when(productRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(ProductNotFoundException.class, () -> productService.getProductById(1L));
+        when(productRepository.findById("1")).thenReturn(Optional.empty());
+        assertThrows(ProductNotFoundException.class, () -> productService.getProductById("1"));
     }
 
     @Test
@@ -110,7 +110,7 @@ class ProductsServiceApplicationTests {
     @Test
     void testUpdateProduct() throws ProductNotFoundException, CategoryNotFoundException {
         Product existingProduct = new Product();
-        existingProduct.setId(1L);
+        existingProduct.setId("1");
         existingProduct.setTitle("Old Title");
         Category category = new Category();
         category.setName("Old Category");
@@ -119,11 +119,11 @@ class ProductsServiceApplicationTests {
         Category newCategory = new Category();
         newCategory.setName("New Category");
 
-        when(productRepository.findById(1L)).thenReturn(Optional.of(existingProduct));
+        when(productRepository.findById("1")).thenReturn(Optional.of(existingProduct));
         when(categoryRepository.findByName("New Category")).thenReturn(Optional.of(newCategory));
         when(productRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Product updatedProduct = productService.updateProduct(1L, "New Title", "New Desc", new BigDecimal("20.00"), "new.jpg", "New Category");
+        Product updatedProduct = productService.updateProduct("1", "New Title", "New Desc", new BigDecimal("20.00"), "new.jpg", "New Category");
 
         assertEquals("New Title", updatedProduct.getTitle());
         assertEquals("New Desc", updatedProduct.getDescription());
@@ -133,35 +133,35 @@ class ProductsServiceApplicationTests {
 
     @Test
     void testUpdateProductNotFound() {
-        when(productRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(ProductNotFoundException.class, () -> productService.updateProduct(1L, "T", "D", BigDecimal.ONE, "I", "C"));
+        when(productRepository.findById("1")).thenReturn(Optional.empty());
+        assertThrows(ProductNotFoundException.class, () -> productService.updateProduct("1", "T", "D", BigDecimal.ONE, "I", "C"));
     }
 
     @Test
     void testUpdateProductCategoryNotFound() {
         Product existingProduct = new Product();
-        existingProduct.setId(1L);
-        when(productRepository.findById(1L)).thenReturn(Optional.of(existingProduct));
+        existingProduct.setId("1");
+        when(productRepository.findById("1")).thenReturn(Optional.of(existingProduct));
         when(categoryRepository.findByName("Non-existent Category")).thenReturn(Optional.empty());
 
-        assertThrows(CategoryNotFoundException.class, () -> productService.updateProduct(1L, null, null, null, null, "Non-existent Category"));
+        assertThrows(CategoryNotFoundException.class, () -> productService.updateProduct("1", null, null, null, null, "Non-existent Category"));
     }
 
     @Test
     void testDeleteProduct() throws ProductNotFoundException {
         Product product = new Product();
-        product.setId(1L);
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-        doNothing().when(productRepository).deleteById(1L);
+        product.setId("1");
+        when(productRepository.findById("1")).thenReturn(Optional.of(product));
+        doNothing().when(productRepository).deleteById("1");
 
-        productService.deleteProductById(1L);
+        productService.deleteProductById("1");
 
-        verify(productRepository, times(1)).deleteById(1L);
+        verify(productRepository, times(1)).deleteById("1");
     }
 
     @Test
     void testDeleteProductNotFound() {
-        when(productRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(ProductNotFoundException.class, () -> productService.deleteProductById(1L));
+        when(productRepository.findById("1")).thenReturn(Optional.empty());
+        assertThrows(ProductNotFoundException.class, () -> productService.deleteProductById("1"));
     }
 }
