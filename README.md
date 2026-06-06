@@ -1,4 +1,3 @@
-Here’s a polished **README.md draft** for your GitHub project, with improved text and a **low-level design use case diagram** included in Markdown:
 
 ---
 
