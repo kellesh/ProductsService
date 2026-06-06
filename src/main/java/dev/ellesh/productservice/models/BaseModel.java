@@ -1,15 +1,16 @@
 package dev.ellesh.productservice.models;
 
-
+import org.springframework.data.annotation.Id;
 
 public abstract class BaseModel {
-    private Long id;
+    @Id
+    private String id;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

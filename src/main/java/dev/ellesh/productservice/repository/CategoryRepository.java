@@ -1,15 +1,12 @@
 package dev.ellesh.productservice.repository;
 
 import dev.ellesh.productservice.models.Category;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface CategoryRepository {
-    Category save(Category category);
-    Optional<Category> findById(Long id);
+@Repository
+public interface CategoryRepository extends MongoRepository<Category, String> {
     Optional<Category> findByName(String name);
-    List<Category> findAll();
-    void deleteById(Long id);
-
 }

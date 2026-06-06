@@ -1,13 +1,9 @@
 package dev.ellesh.productservice.repository;
 
 import dev.ellesh.productservice.models.Product;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface ProductRepository {
-    Product save(Product product);
-    Optional<Product> findById(Long id);
-    List<Product> findAll();
-    void deleteById(Long id);
+@Repository
+public interface ProductRepository extends MongoRepository<Product, String> {
 }
