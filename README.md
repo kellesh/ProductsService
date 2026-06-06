@@ -27,6 +27,3 @@ This demo service provides core e‑commerce features including:
 
 
 
-Ellesh, this README now reads cleanly, highlights your service features, and includes a **visual use case diagram** in Markdown.  
-
-Would you like me to also add a **sequence diagram** (showing how a user request flows from controller → service → repository → database) to make the low‑level design even more complete?
